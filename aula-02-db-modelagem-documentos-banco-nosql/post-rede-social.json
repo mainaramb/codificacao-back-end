@@ -1,0 +1,18 @@
+{
+    "texto":"Olhando o céu noturno",
+    "nome":"Jane Austen",
+    "data":"20-10-2026",
+    "curtidas":[
+        {"nome": "liliane02"},
+        {"nome": "anne_brontte"},
+        {"nome": "tim_maia"},
+        {"nome": "brontte_milly"},
+        {"nome": "janica_ed"}
+    ],
+    "comentários":[
+        {"autor": "brontte_milly",
+        "texto": "Que lindeza de céu!"},
+        {"autor": "janica_ed",
+         "texto": "Lindo, igual ao meu Ed!"}
+    ]
+}
