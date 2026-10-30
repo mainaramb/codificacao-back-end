@@ -1,0 +1,17 @@
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
+import { AlunosController } from "./alunos.controller.js";
+import { AlunosService } from "./alunos.service.js";
+import { Aluno } from "./dto/schemas/aluno.schema.js";
+import { AlunoSchema } from "./dto/schemas/aluno.schema.js";
+import { Mongoose } from "mongoose";
+
+@Module ({
+    imports:[MongooseModule.forFeature([{
+        name: Aluno.name, schema: AlunoSchema
+    }])
+],
+    controllers:[AlunosController],
+    providers:[AlunosService],
+})
+export class AlunosModule {}
