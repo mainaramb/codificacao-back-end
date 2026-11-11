@@ -16,7 +16,7 @@ export class CreateAlunoDto {
 
 
     @IsInt({
-        message:'A idade deve ser um númiro inteiro!'
+        message:'A idade deve ser um número inteiro!'
     })
 
     @Min(0,{
