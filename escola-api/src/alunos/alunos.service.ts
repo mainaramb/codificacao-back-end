@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateAlunoDto } from "./dto/create-aluno.dto.js";
 import { UpdateAlunoDto } from "./dto/update-aluno.dto.js";
 import { Aluno, AlunoDoc } from "./dto/schemas/aluno.schema.js";
+import { MongoServerError } from 'mongodb';
 @Injectable()
 export class AlunosService{
     constructor(@InjectModel(Aluno.name) private alunoModel: Model<AlunoDoc>){}
@@ -14,9 +15,21 @@ export class AlunosService{
     // U - UPDATE (ATUALIZAR)
     // D - DELETE (APAGAR)
 
-    async create(CreateAlunoDto: CreateAlunoDto): Promise<Aluno>{
+    async create(CreateAlunoDto: CreateAlunoDto):Promise<Aluno>{
+
+        try{
         const createAluno = new this.alunoModel(CreateAlunoDto);
-        return createAluno.save();
+        return await createAluno.save();
+        } catch(error: unknown){
+            if(
+                error instanceof MongoServerError
+                &&
+                error.code === 11000
+            ){
+                throw new ConflictException('Já existe uma aluno cadastrado com essa matricula');
+            }
+                throw new InternalServerErrorException('Erro ao Processar o cadastro do Aluno');
+        }
     }
 
     //async findAll(): Promise <Aluno[]>{
